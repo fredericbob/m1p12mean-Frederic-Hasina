@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
+
 const Vehicle = require('../models/Vehicules');  
 
-const addVehicle = async (req, res) => {
+const addVehicule = async (req, res) => {
     try {
         const { marque, modele, annee, immatriculation, kilometrage } = req.body;
         const userId = req.user.id; 
@@ -25,4 +25,30 @@ const addVehicle = async (req, res) => {
 };
 
 
-module.exports=addVehicle;
+const deleteVehicule=async(req,res)=>{
+    try {
+        await Vehicle.findByIdAndDelete(req.params.id);
+        res.status(201).json({
+            message:"Article suprimer"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message:error.message
+        })
+    }
+}
+
+const getVehicule=async(req,res)=>{
+    try{
+        const article=await Vehicle.find();
+        res.status(201).json(article);
+    }catch(err){
+        res.status(500).json({
+            message:err.message
+        });
+    }
+}
+
+
+module.exports={addVehicule,deleteVehicule,getVehicule};
