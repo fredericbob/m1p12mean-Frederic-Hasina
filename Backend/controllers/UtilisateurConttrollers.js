@@ -1,5 +1,6 @@
 const inscription=require('../models/Utilisateur');
 
+
 const createClient =async(req,res)=>{
     try {
         const client =new inscription(req.body);
