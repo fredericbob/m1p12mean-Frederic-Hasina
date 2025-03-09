@@ -16,5 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err) => console.log("MongoDB connection error:", err));
 
 app.use('/users',require('./routes/UtilisateurRoutes'));
+app.use('/login',require('./routes/LoginRoutes'));
+
 
 app.listen(PORT,()=>console.log(`Serveur demarer sur le port ${PORT}`));

@@ -1,7 +1,7 @@
 const express=require('express');
 const route=express.Router();
 
-const{ createClient,getClient}=require('../controllers/UtilisateurConttolleur');
+const{ createClient,getClient}=require('../controllers/UtilisateurConttrollers');
 
 route.get('/',getClient);
 
