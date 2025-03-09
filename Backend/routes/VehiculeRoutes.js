@@ -2,7 +2,9 @@ const express=require('express');
 const routes=express.Router();
 
 const jwtAuth=require('../middlewares/jwtAuth');
-const addVehicle=require('../controllers/vehiculeControllers');
-routes.post('/',jwtAuth(),addVehicle);
+const {addVehicule,deleteVehicule,getVehicule}=require('../controllers/vehiculeControllers');
+routes.post('/',jwtAuth(),addVehicule);
+routes.delete('/:id',deleteVehicule);
+routes.get('/',getVehicule);
 
 module.exports=routes;
