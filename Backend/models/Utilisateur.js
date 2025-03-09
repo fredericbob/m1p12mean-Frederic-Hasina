@@ -50,4 +50,4 @@ inscription.pre('save',async function(next){
     }
   });
   
-  module.exports=mongoose.model('Inscription',inscription);
+  module.exports=mongoose.model('Utilisateur',inscription);
