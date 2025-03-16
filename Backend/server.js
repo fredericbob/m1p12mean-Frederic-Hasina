@@ -18,7 +18,9 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/users',require('./routes/UtilisateurRoutes'));
 app.use('/login',require('./routes/LoginRoutes'));
 app.use('/vehicules',require('./routes/VehiculeRoutes'));
-app.use('/Devis',require('./routes/DevisRoutes'));
+app.use('/rendezvous',require('./routes/RendezVousRoutes'));
+app.use('/piece',require('./routes/PieceRoutes'));
+
 
 
 app.listen(PORT,()=>console.log(`Serveur demarer sur le port ${PORT}`));
