@@ -25,27 +25,30 @@ const RendezVousSchema = new mongoose.Schema({
         enum: ['En attente', 'Confirmé', 'Annulé', 'Terminé'],
         default: 'En attente'
     },
-    prestation: {
+    prestations: [{
         prestation_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Prestation',
             required: true
         },
-        statut: {
-            type: String,
-            enum: ['En attente', 'Confirmé', 'Annulé', 'Terminé'],
-            default: 'En attente'
+        statuts: {
+            En_attente: { type: Date, default: Date.now },
+            En_cours: { type: Date },
+            Annulé: { type: Date },
+            Terminé: { type: Date }
         }
-    },
+    }],
     avis_client: {
         note: {
             type: Number,
             min: 1,
-            max: 5
+            max: 5,
+            required: false
         },
         commentaire: {
             type: String,
-            trim: true
+            trim: true,
+            required: false
         }
     }
 }, { timestamps: true });

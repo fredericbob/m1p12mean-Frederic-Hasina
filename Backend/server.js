@@ -21,6 +21,17 @@ app.use('/vehicules',require('./routes/VehiculeRoutes'));
 app.use('/rendezvous',require('./routes/RendezVousRoutes'));
 app.use('/piece',require('./routes/PieceRoutes'));
 
+// ---------- Routes profil client -----------
+app.use('/acceuil', require('./routes/client/AcceuilRoutes'));
+app.use('/rendez-vous', require('./routes/client/SuivisReparationRoutes'));
+app.use('/rendez-vous', require('./routes/client/AvisRoutes'));
+
+// ---------- Routes profil mecanicien -----------
+app.use('/mecanicien/rendez-vous', require('./routes/mecanicien/ListeRendezVousRoutes'));
+
+// ---------- Routes profil manager -----------
+app.use('/services-proposes', require('./routes/manager/ServiceProposeRoutes'));
+
 
 
 app.listen(PORT,()=>console.log(`Serveur demarer sur le port ${PORT}`));
