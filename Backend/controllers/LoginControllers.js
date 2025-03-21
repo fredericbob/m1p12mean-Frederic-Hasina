@@ -9,12 +9,12 @@ const login= async(req,res)=>{
         const user= await  client.findOne({email});
 
         if(!user){
-          return  res.status(400).json({ message: "Email incorrect"});
+          return  res.status(400).json({ message: "Identifiants incorrects"});
         }
     
         const motdepass= await bcrypt.compare(mdp,user.mdp);
         if (!motdepass) {
-            return res.status(400).json({ message: "mot de passe incorrect" });
+            return res.status(400).json({ message: "Identifiants incorrects" });
         }
 
         const token=jwt.sign({
