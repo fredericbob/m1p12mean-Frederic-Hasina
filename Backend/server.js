@@ -15,6 +15,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Mongo Connected"))
     .catch((err) => console.log("MongoDB connection error:", err));
 
+app.use('/send-email', require('./routes/Email/emailRoute')); 
 app.use('/users',require('./routes/UtilisateurRoutes'));
 app.use('/login',require('./routes/LoginRoutes'));
 app.use('/vehicules',require('./routes/VehiculeRoutes'));
