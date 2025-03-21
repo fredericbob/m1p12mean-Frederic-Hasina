@@ -1,0 +1,36 @@
+<!-- src/app/layout/layout.component.html -->
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <div class="w-64 bg-gray-800 text-white p-4">
+    <div class="text-2xl font-semibold mb-6">Mon Logo</div>
+    <ul>
+      <li class="p-2 hover:bg-gray-700 rounded cursor-pointer">Rendez-vous 1</li>
+      <li class="p-2 hover:bg-gray-700 rounded cursor-pointer">Rendez-vous 2</li>
+      <li class="p-2 hover:bg-gray-700 rounded cursor-pointer">Rendez-vous 3</li>
+    </ul>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar -->
+    <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
+      <div class="text-xl font-semibold">Mon Logo</div>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:bg-blue-700 p-2 rounded">Accueil</a>
+        <a href="#" class="hover:bg-blue-700 p-2 rounded">Rendez-vous</a>
+        <a href="#" class="hover:bg-blue-700 p-2 rounded">Profil</a>
+      </div>
+    </div>
+
+    <!-- Main Body Content -->
+    <div class="p-6">
+      <h1 class="text-2xl font-bold">Liste des Rendez-vous</h1>
+      <!-- Liste des rendez-vous (exemple statique) -->
+      <ul class="mt-4">
+        <li class="p-2 border-b border-gray-300">Rendez-vous 1</li>
+        <li class="p-2 border-b border-gray-300">Rendez-vous 2</li>
+        <li class="p-2 border-b border-gray-300">Rendez-vous 3</li>
+      </ul>
+    </div>
+  </div>
+</div>
