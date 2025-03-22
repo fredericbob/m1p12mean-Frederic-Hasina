@@ -13,13 +13,13 @@ export class LoginComponent implements OnInit {
 user={email:'',mdp:''};
 errorMessage: string = '';
 
-  articles: any[] = [];
+  utilisateur: any[] = [];
     constructor(private utilisateurservice: UtilisateurService) {}
       ngOnInit(): void {
     this.loadUtilisateur();
 }
       loadUtilisateur(): void {
-    this.utilisateurservice.getUtilisateur().subscribe(data => this.articles =
+    this.utilisateurservice.getUtilisateur().subscribe(data => this.utilisateur =
     data);
   }
   deleteUtilisateur(id: string): void {
@@ -28,9 +28,15 @@ this.loadUtilisateur());
   }
   onLogin(): void {
     this.utilisateurservice.login(this.user).subscribe(
-      (response) => {
+      (response: any) => {
         console.log('Connexion réussie:', response);
-        alert('Connexion réussie !');
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          const userId = this.utilisateurservice.getUserIdFromToken();
+          alert('Connexion réussie ! ID Utilisateur: ' + userId);
+        } else {
+          alert('Erreur: Aucun token reçu.');
+        }
       },
       (error) => {
         console.error('Erreur de connexion:', error);
@@ -38,6 +44,7 @@ this.loadUtilisateur());
       }
     );
   }
+
 }
 
 

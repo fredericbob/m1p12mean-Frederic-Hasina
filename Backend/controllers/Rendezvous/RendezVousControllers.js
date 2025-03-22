@@ -1,12 +1,18 @@
 const RendezVous = require('../../models/RendezVous');
 
-
 const addRendezVous = async (req, res) => {
     try {
-        const { client_id, mecanicien_id, vehicule_id, date_rdv, prestation } = req.body;
+        const { client_id, mecanicien_id, vehicule_id, date_rdv, prestations } = req.body;
 
-        if (!client_id || !mecanicien_id || !vehicule_id || !date_rdv || !prestation) {
-            return res.status(400).json({ message: "Tous les champs sont requis" });
+        if (!client_id || !vehicule_id || !date_rdv || !prestations) {
+            return res.status(400).json({ message: "Tous les champs sont requis." });
+        }
+
+   
+        for (const prestation of prestations) {
+            if (!prestation.prestation_id) {
+                return res.status(400).json({ message: "Chaque prestation doit avoir un prestation_id." });
+            }
         }
 
         const newRendezVous = new RendezVous({
@@ -14,7 +20,7 @@ const addRendezVous = async (req, res) => {
             mecanicien_id,
             vehicule_id,
             date_rdv,
-            prestation
+            prestations
         });
 
         await newRendezVous.save();
@@ -24,7 +30,6 @@ const addRendezVous = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
     }
 };
-
 
 const deleteRendezVous = async (req, res) => {
     try {

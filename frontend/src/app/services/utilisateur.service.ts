@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
+import { jwtDecode } from 'jwt-decode';
 
 
 @Injectable({
@@ -28,5 +28,21 @@ export class UtilisateurService {
       deleteutilisateur(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
       }
+
+
+  getUserIdFromToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+
+        return decodedToken.id;
+      } catch (error) {
+        console.error('Erreur lors du décodage du token:', error);
+        return null;
+      }
     }
+    return null;
+  }
+}
 
