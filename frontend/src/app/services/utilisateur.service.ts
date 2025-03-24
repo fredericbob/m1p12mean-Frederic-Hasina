@@ -30,13 +30,17 @@ export class UtilisateurService {
       }
 
 
-  getUserIdFromToken(): string | null {
+  getUserIdFromToken(): { id: string; role: string; email: string } | null {
     const token = localStorage.getItem('token');
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
 
-        return decodedToken.id;
+        return {
+          id: decodedToken.id,
+          role: decodedToken.role,
+          email: decodedToken.email
+        };
       } catch (error) {
         console.error('Erreur lors du décodage du token:', error);
         return null;

@@ -1,0 +1,83 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">Liste des Rendez-vous</h2>
+
+  <table class="w-full table-auto border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 px-4 py-2">Email</th>
+        <th class="border border-gray-300 px-4 py-2">Date</th>
+        <th class="border border-gray-300 px-4 py-2">Prestation</th>
+        <th class="border border-gray-300 px-4 py-2">Status</th>
+        <th class="border border-gray-300 px-4 py-2">Détails du véhicule</th>
+        <th class="border border-gray-300 px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rendezvous of rendezVousList">
+        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.client_id.email }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.date_rdv | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <ul>
+            <li *ngFor="let prestation of rendezvous.prestations">
+              {{ prestation.prestation_id.nom }} - Statut: {{ prestation.statuts.En_attente | date:'dd/MM/yyyy HH:mm' }}
+            </li>
+          </ul>
+        </td>
+        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.statut }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button (click)="openModal(rendezvous.vehicule_id._id)" class="bg-green-500 text-white px-2 py-1 rounded">Voir Détails</button>
+        </td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button class="bg-blue-500 text-white px-2 py-1 rounded">Valider</button>
+          <button class="bg-red-500 text-white px-2 py-1 rounded ml-2">Refuser</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- Modal Véhicule -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-lg">
+    <div class="flex justify-between items-center">
+      <h5 class="text-xl font-semibold">Détails du Véhicule</h5>
+      <button type="button" class="text-gray-500" (click)="closeModal()">
+        <span class="text-2xl">&times;</span>
+      </button>
+    </div>
+    <div class="mt-4">
+      <table class="w-full table-auto border-collapse border border-gray-300">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="px-4 py-2 text-left">Champ</th>
+            <th class="px-4 py-2 text-left">Détail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2"><strong>Marque</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.marque }}</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2"><strong>Modèle</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.modele }}</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2"><strong>Année</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.annee }}</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2"><strong>Immatriculation</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.immatriculation }}</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2"><strong>kilometrage</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.kilometrage }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

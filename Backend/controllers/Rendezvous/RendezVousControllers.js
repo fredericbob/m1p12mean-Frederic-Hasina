@@ -42,7 +42,7 @@ const deleteRendezVous = async (req, res) => {
 
 const getRendezVous = async (req, res) => {
     try {
-        const rendezVous = await RendezVous.find();
+        const rendezVous = await RendezVous.find().populate('client_id', 'nom email').populate('vehicule_id', 'marque modele annee immatriculation kilometrage ').populate('mecanicien_id', 'nom').populate('prestations.prestation_id', 'nom').populate('prestations.prestation_id', 'nom');
         res.status(200).json(rendezVous);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
