@@ -4,7 +4,7 @@ const ServiceProposeController = require('../../controllers/manager/ServicePropo
 const jwtAuth=require('../../middlewares/jwtAuth');
 
 router.post('/', jwtAuth("manager"), ServiceProposeController.createPrestation);
-router.get('/', jwtAuth("manager"), ServiceProposeController.getPrestations);
+router.get('/', ServiceProposeController.getPrestations);
 router.get('/:id', jwtAuth("manager"), ServiceProposeController.getPrestationById);
 router.put('/:id', jwtAuth("manager"), ServiceProposeController.updatePrestation);
 router.delete('/:id', jwtAuth("manager"), ServiceProposeController.deletePrestation);

@@ -39,7 +39,7 @@ this.loadUtilisateur());
             if (userDetails.role === 'manager') {
               this.router.navigate(['/manager']);
             }else if(userDetails.role === 'client') {
-              this.router.navigate(['/client']);
+              this.router.navigate(['/rendezvous']);
             }
           } else{
             this.router.navigate(['/login']);

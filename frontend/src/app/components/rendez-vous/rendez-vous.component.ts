@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RendezvousService } from '../../services/rendez_vous/rendezvous.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UtilisateurService } from '../../services/utilisateur.service';
+import { ListprestationService } from '../../services/prestation/listprestation.service';
 
 @Component({
   selector: 'app-rendez-vous',
@@ -11,14 +13,50 @@ import { CommonModule } from '@angular/common';
   styleUrl: './rendez-vous.component.css'
 })
 export class RendezVousComponent {
+
   rendezVous = {
     client_id: '',
     vehicule_id: '',
     date_rdv: '',
-    prestations: [{ prestation_id: '' }]
+    prestations: []as string[]
   };
 
-  constructor(private rendezVousService: RendezvousService) {}
+  prestationsList: any[] = [];
+
+  constructor(private rendezVousService: RendezvousService,private utilisateurservice:UtilisateurService,private prestationService:ListprestationService) {}
+  ngOnInit() {
+    const clientId  = this.utilisateurservice.getUserIdFromToken(); // Récupérer l'ID du client
+    if (clientId) {
+      this.rendezVous.client_id = clientId?.id;
+    } else {
+      console.error("Erreur : Impossible de récupérer l'ID du client");
+    }
+    this.loadPrestations();
+  }
+
+  loadPrestations() {
+    this.prestationService.getprestation().subscribe(
+      (data) => {
+        this.prestationsList = data;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des prestations', error);
+      }
+    );
+  }
+
+  togglePrestation(prestationId: string) {
+    const index = this.rendezVous.prestations.indexOf(prestationId);
+
+    if (index === -1) {
+      this.rendezVous.prestations.push(prestationId); 
+    } else {
+      this.rendezVous.prestations.splice(index, 1);
+    }
+
+    console.log('Prestations sélectionnées:', this.rendezVous.prestations);
+  }
+
 
   onSubmit() {
     this.rendezVousService.addRendezVous(this.rendezVous).subscribe(
