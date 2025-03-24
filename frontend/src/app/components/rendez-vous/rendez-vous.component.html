@@ -2,10 +2,6 @@
   <h1 class="text-3xl font-bold mb-4">Ajouter un Rendez-vous</h1>
   <form (ngSubmit)="onSubmit()" class="space-y-4">
     <div>
-      <label for="client_id" class="block text-lg">Client ID</label>
-      <input id="client_id" [(ngModel)]="rendezVous.client_id" name="client_id" type="text" class="w-full p-2 border border-gray-300 rounded" required />
-    </div>
-    <div>
       <label for="vehicule_id" class="block text-lg">Véhicule ID</label>
       <input id="vehicule_id" [(ngModel)]="rendezVous.vehicule_id" name="vehicule_id" type="text" class="w-full p-2 border border-gray-300 rounded" required />
     </div>
@@ -14,9 +10,21 @@
       <input id="date_rdv" [(ngModel)]="rendezVous.date_rdv" name="date_rdv" type="datetime-local" class="w-full p-2 border border-gray-300 rounded" required />
     </div>
     <div>
-      <label for="prestations" class="block text-lg">Prestations</label>
-      <input id="prestations" [(ngModel)]="rendezVous.prestations" name="prestations" type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Prestation ID" required />
+      <label class="block text-lg">Prestations</label>
+      <div class="flex flex-wrap gap-4"> <!-- Utilisation de flex et gap pour espacer les cases -->
+        <div *ngFor="let prestation of prestationsList" class="flex items-center">
+          <input
+            type="checkbox"
+            [value]="prestation._id"
+            (change)="togglePrestation(prestation._id)"
+            [checked]="rendezVous.prestations.includes(prestation._id)"
+            class="mr-2" /> <!-- Auto-fermante -->
+          <span>{{ prestation.nom }}</span>
+        </div>
+      </div>
     </div>
+
+
     <button type="submit" class="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Ajouter</button>
   </form>
 </div>
