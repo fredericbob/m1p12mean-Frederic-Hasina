@@ -49,6 +49,7 @@ const getRendezVous = async (req, res) => {
     }
 };
 
+
 const updateRendezVous = async (req, res) => {
     try {
         const { statut } = req.body;
