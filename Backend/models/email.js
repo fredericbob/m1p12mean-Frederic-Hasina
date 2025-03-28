@@ -1,3 +1,4 @@
+// emailService.js
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -9,26 +10,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const mailOptions = {
-    from: "", 
-    to: "",
-    subject: "",
-    text: "",
+const sendResetPasswordEmail = (email, resetLink) => {
+    const mailOptions = {
+        from: process.env.EMAIL_FROM,
+        to: email,
+        subject: "Réinitialisation de votre mot de passe",
+        text: `Cliquez sur ce lien pour réinitialiser votre mot de passe: ${resetLink}`,
+    };
+
+    return transporter.sendMail(mailOptions);
 };
 
-
-exports.sendMail = async (req, res) => {
-    const { to, from, subject, text } = req.body;
-
-    mailOptions.from = from;
-    mailOptions.to = to;
-    mailOptions.subject = subject;
-    mailOptions.text = text;
-
-    try {
-        const result = await transporter.sendMail(mailOptions);
-        return result;
-    } catch (error) {
-        return error;
-    }
-};
+module.exports = sendResetPasswordEmail;
