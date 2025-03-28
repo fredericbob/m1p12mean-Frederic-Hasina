@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilisateurService } from '../../services/utilisateur.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inscription',
@@ -18,20 +19,22 @@ export class InscriptionComponent implements OnInit {
     telephone: '',
     mdp: '',
     adresse: '',
-    role: 'client' 
+    role: 'client'
   };
 
   errorMessage: string = '';
 
-  constructor(private utilisateurservice: UtilisateurService) {}
+  constructor(private utilisateurservice: UtilisateurService,private router: Router) {}
 
   ngOnInit(): void {}
 
   onInscription(): void {
     this.utilisateurservice.addutilisateur(this.user).subscribe(
       (response) => {
-        console.log('Inscription réussie:', response);
-        alert('Inscription réussie !');
+
+        setTimeout(() => {
+          this.router.navigate(['login']);
+        }, 1000);
       },
       (error) => {
         console.error('Erreur d\'inscription:', error);

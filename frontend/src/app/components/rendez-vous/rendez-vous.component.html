@@ -1,30 +1,60 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-3xl font-bold mb-4">Ajouter un Rendez-vous</h1>
-  <form (ngSubmit)="onSubmit()" class="space-y-4">
-    <div>
-      <label for="vehicule_id" class="block text-lg">Véhicule ID</label>
-      <input id="vehicule_id" [(ngModel)]="rendezVous.vehicule_id" name="vehicule_id" type="text" class="w-full p-2 border border-gray-300 rounded" required />
-    </div>
-    <div>
-      <label for="date_rdv" class="block text-lg">Date du rendez-vous</label>
-      <input id="date_rdv" [(ngModel)]="rendezVous.date_rdv" name="date_rdv" type="datetime-local" class="w-full p-2 border border-gray-300 rounded" required />
-    </div>
-    <div>
-      <label class="block text-lg">Prestations</label>
-      <div class="flex flex-wrap gap-4"> <!-- Utilisation de flex et gap pour espacer les cases -->
-        <div *ngFor="let prestation of prestationsList" class="flex items-center">
-          <input
-            type="checkbox"
-            [value]="prestation._id"
-            (change)="togglePrestation(prestation._id)"
-            [checked]="rendezVous.prestations.includes(prestation._id)"
-            class="mr-2" /> <!-- Auto-fermante -->
-          <span>{{ prestation.nom }}</span>
+<div class="flex min-h-screen items-center justify-start bg-white">
+  <div class="mx-auto w-full max-w-lg">
+    <h1 class="text-center text-4xl font-medium mb-6">Ajouter un Rendez-vous</h1>
+    <form (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="relative z-0">
+          <label for="modele" class="text-lg text-gray-500">Modèle du véhicule</label>
+          <input id="modele" [(ngModel)]="rendezVous.vehicule_id.modele" name="modele" type="text" class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" required />
+        </div>
+        <div class="relative z-0">
+          <label for="annee" class="text-lg text-gray-500">Année du véhicule</label>
+          <input id="annee" [(ngModel)]="rendezVous.vehicule_id.annee" name="annee" type="number" class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" required />
+        </div>
+        <div class="relative z-0">
+          <label for="marque" class="text-lg text-gray-500">Marque du véhicule</label>
+          <input id="marque" [(ngModel)]="rendezVous.vehicule_id.marque" name="marque" type="text" class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" required />
+        </div>
+        <div class="relative z-0">
+          <label for="type" class="text-lg text-gray-500">Type de véhicule</label>
+          <select
+            id="type"
+            [(ngModel)]="rendezVous.vehicule_id.type"
+            name="type"
+            class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
+            required>
+            <option value="" disabled selected>Choisir le type de véhicule</option>
+            <option value="voiture_de_plaisir">Voiture de plaisir</option>
+            <option value="camion">Camion</option>
+            <option value="utilitaire">Utilitaire</option>
+            <option value="moto">Moto</option>
+            <option value="suv">SUV</option>
+            <!-- Ajoutez d'autres options si nécessaire -->
+          </select>
         </div>
       </div>
-    </div>
+      <div class="relative z-0">
+        <label for="date_rdv" class="text-lg text-gray-500">Date du rendez-vous</label>
+        <input id="date_rdv" [(ngModel)]="rendezVous.date_rdv" name="date_rdv" type="datetime-local" class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" required />
+      </div>
 
+      <!-- Prestations -->
+      <div class="relative z-0">
+        <label class="text-lg text-gray-500">Prestations</label>
+        <div class="flex flex-wrap gap-4 mt-2">
+          <div *ngFor="let prestation of prestationsList" class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              [value]="prestation._id"
+              (change)="togglePrestation(prestation._id)"
+              [checked]="rendezVous.prestations.includes(prestation._id)"
+              class="h-5 w-5 text-blue-500 focus:ring-0" />
+            <span class="text-gray-700 text-sm">{{ prestation.nom }}</span>
+          </div>
+        </div>
+      </div>
 
-    <button type="submit" class="w-full py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Ajouter</button>
-  </form>
+      <button type="submit" class="mt-5 rounded-md bg-black px-10 py-2 text-white">Ajouter</button>
+    </form>
+  </div>
 </div>

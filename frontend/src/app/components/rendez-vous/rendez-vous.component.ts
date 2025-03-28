@@ -16,9 +16,14 @@ export class RendezVousComponent {
 
   rendezVous = {
     client_id: '',
-    vehicule_id: '',
+    vehicule_id: {
+       modele: '',
+      annee: null,
+      marque: '',
+      type: ''
+    },
     date_rdv: '',
-    prestations: []as string[]
+    prestations: [] as { prestation_id: string }[]
   };
 
   prestationsList: any[] = [];
@@ -46,10 +51,10 @@ export class RendezVousComponent {
   }
 
   togglePrestation(prestationId: string) {
-    const index = this.rendezVous.prestations.indexOf(prestationId);
+    const index = this.rendezVous.prestations.findIndex(prestation => prestation.prestation_id === prestationId);
 
     if (index === -1) {
-      this.rendezVous.prestations.push(prestationId); 
+      this.rendezVous.prestations.push({prestation_id:prestationId});
     } else {
       this.rendezVous.prestations.splice(index, 1);
     }
