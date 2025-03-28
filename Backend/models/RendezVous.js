@@ -12,9 +12,10 @@
             required: false
         },
         vehicule_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Vehicules',
-            required: true
+            modele: { type: String, required: true },
+            annee: { type: Number, required: true },
+            marque: { type: String, required: true },
+            type: { type: String, required: true }
         },
         date_rdv: {
             type: Date,

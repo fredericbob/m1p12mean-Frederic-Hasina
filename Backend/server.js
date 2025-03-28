@@ -21,6 +21,8 @@ app.use('/login',require('./routes/LoginRoutes'));
 app.use('/vehicules',require('./routes/VehiculeRoutes'));
 app.use('/rendezvous',require('./routes/RendezVousRoutes'));
 app.use('/piece',require('./routes/PieceRoutes'));
+app.use('/forgot-password',require('./routes/Email/emailRoute'));
+app.use('/reset-password',require('./routes/Email/emailRoute'));
 
 // ---------- Routes profil client -----------
 app.use('/acceuil', require('./routes/client/AcceuilRoutes'));
