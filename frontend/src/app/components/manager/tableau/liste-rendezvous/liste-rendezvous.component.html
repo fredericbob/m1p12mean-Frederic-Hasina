@@ -8,35 +8,46 @@
         <th class="border border-gray-300 px-4 py-2">Date</th>
         <th class="border border-gray-300 px-4 py-2">Prestation</th>
         <th class="border border-gray-300 px-4 py-2">Status</th>
+        <th class="border border-gray-300 px-4 py-2">Mecanicien</th>
         <th class="border border-gray-300 px-4 py-2">Détails du véhicule</th>
         <th class="border border-gray-300 px-4 py-2">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let rendezvous of rendezVousList">
-        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.client_id.email }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.client_id?.email }}</td>
         <td class="border border-gray-300 px-4 py-2">{{ rendezvous.date_rdv | date:'dd/MM/yyyy HH:mm' }}</td>
         <td class="border border-gray-300 px-4 py-2">
           <ul>
             <li *ngFor="let prestation of rendezvous.prestations">
-              {{ prestation.prestation_id.nom }} - Statut: {{ prestation.statuts.En_attente | date:'dd/MM/yyyy HH:mm' }}
+              {{ prestation.prestation_id?.nom }} - Statut: {{ prestation.statuts?.En_attente | date:'dd/MM/yyyy HH:mm' }}
             </li>
           </ul>
         </td>
         <td class="border border-gray-300 px-4 py-2">{{ rendezvous.statut }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ rendezvous.mecanicien_id?.nom }}</td>
         <td class="border border-gray-300 px-4 py-2">
-          <button (click)="openModal(rendezvous.vehicule_id._id)" class="bg-green-500 text-white px-2 py-1 rounded">Voir Détails</button>
+          <button (click)="openModal(rendezvous.vehicule_id)"
+                  class="bg-green-500 text-white px-2 py-1 rounded">
+            Voir Détails
+          </button>
         </td>
         <td class="border border-gray-300 px-4 py-2">
           <button class="bg-blue-500 text-white px-2 py-1 rounded">Valider</button>
           <button class="bg-red-500 text-white px-2 py-1 rounded ml-2">Refuser</button>
+          <button (click)="openMecanicienModal(rendezvous)"
+          class="bg-yellow-500 text-white px-2 py-1 rounded ml-2">
+    Ajouter Mécanicien
+  </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
 <!-- Modal Véhicule -->
-<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+<div *ngIf="isModalOpen"
+     class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-lg">
     <div class="flex justify-between items-center">
       <h5 class="text-xl font-semibold">Détails du Véhicule</h5>
@@ -52,7 +63,7 @@
             <th class="px-4 py-2 text-left">Détail</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="selectedVehicule">
           <tr>
             <td class="border px-4 py-2"><strong>Marque</strong></td>
             <td class="border px-4 py-2">{{ selectedVehicule?.marque }}</td>
@@ -66,16 +77,35 @@
             <td class="border px-4 py-2">{{ selectedVehicule?.annee }}</td>
           </tr>
           <tr>
-            <td class="border px-4 py-2"><strong>Immatriculation</strong></td>
-            <td class="border px-4 py-2">{{ selectedVehicule?.immatriculation }}</td>
+            <td class="border px-4 py-2"><strong>Type</strong></td>
+            <td class="border px-4 py-2">{{ selectedVehicule?.type }}</td>
           </tr>
-          <tr>
-            <td class="border px-4 py-2"><strong>kilometrage</strong></td>
-            <td class="border px-4 py-2">{{ selectedVehicule?.kilometrage }}</td>
-          </tr>
-
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ajout Mécanicien -->
+<div *ngIf="isMecanicienModalOpen" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-md w-1/4">
+    <h3 class="text-lg font-semibold text-slate-700 mb-4">
+      Ajouter un mécanicien pour le rendez-vous
+    </h3>
+    <div>
+      <label for="mecanicien" class="block text-sm font-medium text-gray-700">
+
+      </label>
+      <select id="mecanicien" [(ngModel)]="selectedMecanicien" class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md">
+        <option value="" disabled selected>Sélectionner un mécanicien</option>
+        <option *ngFor="let mecano of mecaniciensList" [value]="mecano._id">
+          {{ mecano.nom }}
+        </option>
+      </select>
+    </div>
+    <div class="mt-4 flex justify-center gap-x-2">
+      <button class="bg-gray-300 px-4 py-2 rounded-md" (click)="closeMecanicienModal()">Annuler</button>
+      <button class="bg-green-500 text-white px-4 py-2 rounded-md" (click)="assignMecanicien()">Valider</button>
     </div>
   </div>
 </div>

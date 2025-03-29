@@ -2,25 +2,49 @@ import { Component } from '@angular/core';
 import { UtilisateurService } from '../../../../services/utilisateur.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-liste-utilisateur',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,NgxPaginationModule],
   templateUrl: './liste-utilisateur.component.html',
   styleUrl: './liste-utilisateur.component.css'
 })
 export class ListeUtilisateurComponent {
 
   utilisateurs: any[] = [];
+  filteredUtilisateurs: any[] = [];
+  searchTerm: string = '';
   selectedUtilisateur: any;
   newRole: string = '';
   isRoleModalOpen: boolean = false;
+
+  page: number = 1; // Page actuelle
+  itemsPerPage: number = 10; // Nombre d'éléments par page
 
   constructor(private utilisateurService: UtilisateurService) {}
 
   ngOnInit(): void {
     this.getUtilisateurs();
+  }
+  filterUtilisateurs(): void {
+    if (this.searchTerm) {
+      // Filtrage des utilisateurs selon le terme de recherche
+      this.filteredUtilisateurs = this.utilisateurs.filter(utilisateur =>
+        utilisateur.nom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        utilisateur.prenom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        utilisateur.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      // Si la recherche est vide, on réinitialise la liste filtrée
+      this.filteredUtilisateurs = [...this.utilisateurs];
+    }
+  }
+
+  // Cette méthode doit être appelée à chaque changement du champ de recherche
+  onSearchTermChange(): void {
+    this.filterUtilisateurs();
   }
 
   getUtilisateurs(): void {
@@ -28,6 +52,7 @@ export class ListeUtilisateurComponent {
       (data) => {
         console.log(data);
         this.utilisateurs = data;
+        this.filterUtilisateurs();
       },
       (error) => {
         console.error('Erreur lors de la récupération des utilisateurs', error);
