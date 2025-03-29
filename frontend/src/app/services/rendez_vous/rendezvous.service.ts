@@ -25,4 +25,16 @@ export class RendezvousService {
   getRendezVous(): Observable<any> {
     return this.http.get(this.apiUrl, { headers: this.getHeaders() });
   }
+
+  // Récupérer la liste des mécaniciens
+// Récupérer la liste des mécaniciens
+getMecaniciens(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/mecanicien`, { headers: this.getHeaders() });
+}
+
+// Assigner un mécanicien à un rendez-vous
+assignMecanicienToRendezvous(rendezvousId: string, mecanicienId: string) {
+  return this.http.post(`https://ton-api.com/rendezvous/${rendezvousId}/assign-mecanicien`, { mecanicienId });
+}
+
 }

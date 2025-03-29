@@ -1,48 +1,88 @@
-<div class="p-4">
-  <h2 class="text-xl font-bold mb-4">Liste des Utilisateurs</h2>
+<div class="max-w-[720px] mx-auto">
+  <div class="relative flex flex-col w-full h-full text-slate-700 bg-white shadow-md rounded-xl bg-clip-border">
+    <div class="flex items-center justify-between ">
+      <div>
 
-  <table class="w-full table-auto border-collapse border border-gray-300">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="border border-gray-300 px-4 py-2">Nom</th>
-        <th class="border border-gray-300 px-4 py-2">Prénom</th>
-        <th class="border border-gray-300 px-4 py-2">Email</th>
-        <th class="border border-gray-300 px-4 py-2">Téléphone</th>
-        <th class="border border-gray-300 px-4 py-2">Rôle</th>
-        <th class="border border-gray-300 px-4 py-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let utilisateur of utilisateurs">
-        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.nom }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.prenom }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.email }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.telephone }}</td>
-        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.role }}</td>
-        <td class="border border-gray-300 px-4 py-2">
-          <button class="bg-blue-500 text-white px-2 py-1 rounded" (click)="openRoleModal(utilisateur)">Changer rôle</button>
-          <button class="bg-red-500 text-white px-2 py-1 rounded" (click)="deleteUtilisateur(utilisateur._id)">Supprimer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+      </div>
+  <div class="flex flex-col gap-2 shrink-0 sm:flex-row">
+
+
+       <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchTermChange()"
+    placeholder="Rechercher par nom..."
+    class="w-full px-4 py-2 border border-gray-300 rounded-md"
+  />
+
+
+  </div>
+
+    </div>
+
+      <div class="p-0 overflow-scroll">
+          <table class="w-full mt-4 text-left table-auto min-w-max">
+              <thead>
+                  <tr class="bg-slate-50 border-y border-slate-200">
+                      <th class="p-4 text-sm font-normal text-slate-500">Membre</th>
+                      <th class="p-4 text-sm font-normal text-slate-500">Téléphone</th>
+                      <th class="p-4 text-sm font-normal text-slate-500">Rôle</th>
+                      <th class="p-4 text-sm font-normal text-slate-500">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let utilisateur of filteredUtilisateurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="border-b border-slate-200 hover:bg-slate-100">
+                    <td class="p-4 border-b border-slate-200">
+                      <div class="flex items-center gap-3">
+                      <img src="https://media.istockphoto.com/id/1495088043/fr/vectoriel/ic%C3%B4ne-de-profil-utilisateur-avatar-ou-ic%C3%B4ne-de-personne-photo-de-profil-symbole-portrait.jpg?s=612x612&w=0&k=20&c=moNRZjYtVpH-I0mAe-ZfjVkuwgCOqH-BRXFLhQkZoP8="
+                          alt="John Michael" class="relative inline-block h-9 w-9 !rounded-full object-cover object-center" />
+                      <div class="flex flex-col">
+                          <p class="text-sm font-semibold text-slate-700">
+                            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                          </p>
+                          <p
+                          class="text-sm text-slate-500">
+                          {{ utilisateur.email }}
+                          </p>
+                      </div>
+                      </div>
+                  </td>
+                      <td class="p-4 text-sm text-slate-700">{{ utilisateur.telephone }}</td>
+                      <td class="p-4 text-sm text-slate-700">{{ utilisateur.role }}</td>
+                      <td class="p-4 text-sm text-slate-700 flex space-x-2">
+                          <button class="bg-blue-500 text-white px-3 py-2 rounded-md text-xs" (click)="openRoleModal(utilisateur)">Changer rôle</button>
+                          <button class="bg-red-500 text-white px-3 py-1 rounded-md text-xs" (click)="deleteUtilisateur(utilisateur._id)">Supprimer</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div class="flex items-center justify-between p-3">
+        <p class="block text-sm text-slate-500">
+          Page {{ page }} de {{ (utilisateurs.length / itemsPerPage) | number: '1.0-0' }}
+        </p>
+        <pagination-controls (pageChange)="page = $event" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+
 <div *ngIf="isRoleModalOpen" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-  <div class="bg-white p-6 rounded-lg shadow-md w-1/3">
-    <h3 class="text-xl font-semibold mb-4">Changer le rôle de {{ selectedUtilisateur?.nom }}</h3>
-    <div>
-      <label for="role" class="block text-sm font-medium text-gray-700">Sélectionner un rôle</label>
-      <select id="role" [(ngModel)]="newRole" class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md">
-        <option value="manager">Manager</option>
-        <option value="mecanicien">Mécanicien</option>
-        <option value="client">Client</option>
-      </select>
-    </div>
-    <div class="mt-4 flex w-full justify-between">
-      <button class="bg-gray-300 px-4 py-2 rounded-md" (click)="closeRoleModal()">Annuler</button>
-      <button class="bg-blue-500 text-white px-4 py-2 rounded-md" (click)="updateRole(selectedUtilisateur._id, newRole)">Valider</button>
-    </div>
-
-
+  <div class="bg-white p-6 rounded-lg shadow-md w-1/4">
+      <h3 class="text-lg font-semibold text-slate-800 mb-4">Changer le rôle de {{ selectedUtilisateur?.nom }}</h3>
+      <div>
+          <label for="role" class="block text-sm font-medium text-gray-700">Sélectionner un rôle</label>
+          <select id="role" [(ngModel)]="newRole" class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md">
+              <option value="manager">Manager</option>
+              <option value="mecanicien">Mécanicien</option>
+              <option value="client">Client</option>
+          </select>
+      </div>
+      <div class="mt-4 flex justify-center gap-x-2">
+          <button class="bg-gray-300 px-4 py-2 rounded-md" (click)="closeRoleModal()">Annuler</button>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded-md" (click)="updateRole(selectedUtilisateur._id, newRole)">Valider</button>
+      </div>
   </div>
 </div>
