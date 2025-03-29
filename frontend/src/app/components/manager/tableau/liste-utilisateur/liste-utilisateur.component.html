@@ -1,0 +1,48 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">Liste des Utilisateurs</h2>
+
+  <table class="w-full table-auto border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 px-4 py-2">Nom</th>
+        <th class="border border-gray-300 px-4 py-2">Prénom</th>
+        <th class="border border-gray-300 px-4 py-2">Email</th>
+        <th class="border border-gray-300 px-4 py-2">Téléphone</th>
+        <th class="border border-gray-300 px-4 py-2">Rôle</th>
+        <th class="border border-gray-300 px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let utilisateur of utilisateurs">
+        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.nom }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.prenom }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.email }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.telephone }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ utilisateur.role }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button class="bg-blue-500 text-white px-2 py-1 rounded" (click)="openRoleModal(utilisateur)">Changer rôle</button>
+          <button class="bg-red-500 text-white px-2 py-1 rounded" (click)="deleteUtilisateur(utilisateur._id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="isRoleModalOpen" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-md w-1/3">
+    <h3 class="text-xl font-semibold mb-4">Changer le rôle de {{ selectedUtilisateur?.nom }}</h3>
+    <div>
+      <label for="role" class="block text-sm font-medium text-gray-700">Sélectionner un rôle</label>
+      <select id="role" [(ngModel)]="newRole" class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md">
+        <option value="manager">Manager</option>
+        <option value="mecanicien">Mécanicien</option>
+        <option value="client">Client</option>
+      </select>
+    </div>
+    <div class="mt-4 flex w-full justify-between">
+      <button class="bg-gray-300 px-4 py-2 rounded-md" (click)="closeRoleModal()">Annuler</button>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded-md" (click)="updateRole(selectedUtilisateur._id, newRole)">Valider</button>
+    </div>
+
+
+  </div>
+</div>
