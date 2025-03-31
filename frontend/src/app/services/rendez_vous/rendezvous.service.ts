@@ -26,15 +26,39 @@ export class RendezvousService {
     return this.http.get(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  // Récupérer la liste des mécaniciens
-// Récupérer la liste des mécaniciens
+
 getMecaniciens(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/mecanicien`, { headers: this.getHeaders() });
 }
 
-// Assigner un mécanicien à un rendez-vous
-assignMecanicienToRendezvous(rendezvousId: string, mecanicienId: string) {
-  return this.http.post(`https://ton-api.com/rendezvous/${rendezvousId}/assign-mecanicien`, { mecanicienId });
+updateDateRendezVous(id: string, newDate: string): Observable<any> {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return new Observable(observer => {
+      observer.error('Token manquant');
+    });
+  }
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  // Formater la date en ISO 8601 si nécessaire
+  const formattedDate = new Date(newDate).toISOString();
+
+  // Envoyer la clé 'newDate' au lieu de 'date_rdv'
+  return this.http.put(`${this.apiUrl}/${id}/dates`, { newDate: formattedDate }, { headers });
+}
+
+
+
+
+assignMecanicienToRendezvous(id: string, mecanicienId: string) {
+  return this.http.put(`${this.apiUrl}/${id}/ajoutmecanicien`, { mecanicienId },{ headers: this.getHeaders() });
+}
+
+updateStatus(id: string) {
+  return this.http.put(`${this.apiUrl}/${id}/status`,{ headers: this.getHeaders() });
 }
 
 }
