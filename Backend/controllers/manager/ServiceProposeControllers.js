@@ -34,7 +34,6 @@ exports.getPrestationById = async (req, res) => {
     }
 };
 
-// Mettre à jour une prestation
 exports.updatePrestation = async (req, res) => {
     try {
         const prestation = await Prestation.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -45,7 +44,7 @@ exports.updatePrestation = async (req, res) => {
     }
 };
 
-// Supprimer une prestation
+
 exports.deletePrestation = async (req, res) => {
     try {
         const prestation = await Prestation.findByIdAndDelete(req.params.id);
