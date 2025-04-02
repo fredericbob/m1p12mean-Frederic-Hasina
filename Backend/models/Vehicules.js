@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const vehiculeSchema = new mongoose.Schema({
     proprietaire_id: {
         type: mongoose.Schema.Types.ObjectId,

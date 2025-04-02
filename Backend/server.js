@@ -23,7 +23,7 @@ app.use('/rendezvous',require('./routes/RendezVousRoutes'));
 app.use('/piece',require('./routes/PieceRoutes'));
 app.use('/forgot-password',require('./routes/Email/emailRoute'));
 app.use('/reset-password',require('./routes/Email/emailRoute'));
-app.use('/facture',require('./routes/facture/factureRoute'));
+
 
 // ---------- Routes layout -----------
 app.use('/default-layout', require('./routes/layout-frontend/DefaultLayoutRoutes'));
