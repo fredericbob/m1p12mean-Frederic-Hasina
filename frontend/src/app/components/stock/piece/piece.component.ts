@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StockpieceService } from '../../../services/stockpiece/stockpiece.service';
+import { VehiculeService } from '../../../services/vehicule/vehicule.service';
 
 @Component({
   selector: 'app-piece',
@@ -11,14 +12,20 @@ import { StockpieceService } from '../../../services/stockpiece/stockpiece.servi
   styleUrl: './piece.component.css'
 })
 export class PieceComponent {
-  pieces: any[] = [];  
-  newPiece = { nom: '', types: [] };
+  pieces: any[] = [];
+  newPiece = { nom: '', types: [{ prix: 0, vehicule: '' }] };
+  vehicules: any[] = [];
   errorMessage: string = '';
 
-  constructor(private stockpieceService: StockpieceService) {}
+
+  messageSuccess = '';
+  messageError = '';
+
+  constructor(private stockpieceService: StockpieceService,private vehiculeservice:VehiculeService) {}
 
   ngOnInit(): void {
     this.getPieces();
+    this.getVehicules();
   }
 
 
@@ -33,21 +40,36 @@ export class PieceComponent {
       }
     );
   }
+  getVehicules(): void {
+    this.vehiculeservice.getvehicule().subscribe(
+      (data) => {
+        console.log('Véhicules récupérés:', data);  // Affiche les véhicules récupérés
+        this.vehicules = data;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des véhicules', error);
+        this.errorMessage = 'Erreur lors de la récupération des véhicules';
+      }
+    );
+  }
+
 
 
   addPiece(): void {
     this.stockpieceService.addpiece(this.newPiece).subscribe(
       (response) => {
-        console.log('Pièce ajoutée:', response);
-        this.getPieces();  // Rafraîchir la liste des pièces
-        this.newPiece = { nom: '', types: [] };  // Réinitialiser le formulaire
+        this.messageSuccess = 'Piece ajouté avec succès ✅';
+        this.messageError = '';
+        this.getPieces();
+        this.newPiece = { nom: '', types: [{ prix: 0, vehicule: '' }] };  // Réinitialiser le formulaire
       },
       (error) => {
-        console.error('Erreur lors de l\'ajout de la pièce', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de la pièce';
+        this.messageError = 'Erreur lors de l\'ajout du piece ❌';
+        this.messageSuccess = '';
       }
     );
   }
+
 
   // Méthode pour supprimer une pièce
   deletePiece(id: string): void {

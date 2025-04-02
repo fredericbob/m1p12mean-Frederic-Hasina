@@ -12,6 +12,7 @@ import { ListeUtilisateurComponent } from './components/manager/tableau/liste-ut
 import { PieceComponent } from './components/stock/piece/piece.component';
 import { VehiculeComponent } from './components/vehicule/vehicule/vehicule.component';
 import { ListevehiculeComponent } from './components/manager/tableau/listevehicule/listevehicule.component';
+import { ListepieceComponent } from './components/manager/tableau/listepiece/listepiece.component';
 
 export const routes: Routes = [ { path: 'login', component: LoginComponent },
   { path: 'rendezvous', component:RendezVousComponent  },
@@ -24,6 +25,10 @@ export const routes: Routes = [ { path: 'login', component: LoginComponent },
       { path: 'stockpiece', component:PieceComponent  },
       { path: 'ajoutvehicule', component:VehiculeComponent  },
       { path: 'listevehicule', component:ListevehiculeComponent  },
+      { path: 'listepiece', component:ListepieceComponent  },
+      { path: 'ajoutpiece', component:PieceComponent  },
+
+
 
     ]
 },

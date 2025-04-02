@@ -15,7 +15,12 @@
             modele: { type: String, required: true },
             annee: { type: Number, required: true },
             marque: { type: String, required: true },
-            type: { type: String, required: true }
+            type: { type: String, required: true },
+            type_moteur: {
+                type: String,
+                enum: ['essence', 'diesel'],
+                required: [true, "Le type de moteur est requis"]
+            }
         },
         date_rdv: {
             type: Date,

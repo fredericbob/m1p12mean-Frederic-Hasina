@@ -13,7 +13,7 @@ const PieceSchema = new mongoose.Schema({
             },
             vehicule: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Vehicule',
+                ref: 'Vehicules',
                 required: true
             }
         }

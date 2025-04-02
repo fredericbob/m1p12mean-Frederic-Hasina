@@ -1,5 +1,12 @@
 <div class="flex min-h-screen items-center justify-start bg-white">
   <div class="mx-auto w-full max-w-lg">
+    <div *ngIf="messageSuccess" class="p-4 mb-4 text-green-800 bg-green-200 rounded-lg">
+      {{ messageSuccess }}
+    </div>
+
+    <div *ngIf="messageError" class="p-4 mb-4 text-red-800 bg-red-200 rounded-lg">
+      {{ messageError }}
+    </div>
     <h1 class="text-center text-4xl font-medium mb-6">Ajouter un Rendez-vous</h1>
     <form (ngSubmit)="onSubmit()" class="space-y-6">
       <div class="grid gap-6 sm:grid-cols-2">
@@ -32,6 +39,19 @@
             <!-- Ajoutez d'autres options si nécessaire -->
           </select>
         </div>
+        <div class="relative z-0">
+          <label for="type_moteur" class="text-lg text-gray-500">Type moteur</label>
+          <select
+            id="type_moteur"
+            [(ngModel)]="rendezVous.vehicule_id.type_moteur"
+            name="type"
+            class="peer block w-full appearance-none border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
+            required>
+            <option value="" disabled selected>Choisir le type de moteur</option>
+            <option value="essence">Essence</option>
+            <option value="diesel">Diesel</option>
+          </select>
+        </div>
       </div>
       <div class="relative z-0">
         <label for="date_rdv" class="text-lg text-gray-500">Date du rendez-vous</label>
@@ -56,13 +76,8 @@
 
       <button type="submit" class="mt-5 rounded-md bg-black px-10 py-2 text-white">Ajouter</button>
     </form>
-    <div *ngIf="messageSuccess" class="p-4 mb-4 text-green-800 bg-green-200 rounded-lg">
-      {{ messageSuccess }}
-    </div>
 
-    <div *ngIf="messageError" class="p-4 mb-4 text-red-800 bg-red-200 rounded-lg">
-      {{ messageError }}
-    </div>
 
   </div>
+
 </div>

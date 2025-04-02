@@ -1,4 +1,6 @@
 const Piece = require('../../models/Piece');
+const RendezVous = require('../../models/RendezVous'); 
+const Vehicules = require('../../models/Vehicules'); 
 
 const addPiece = async (req, res) => {
     try {
@@ -32,12 +34,15 @@ const addPiece = async (req, res) => {
 
 const getPieces = async (req, res) => {
     try {
-        const pieces = await Piece.find();
+  
+        const pieces = await Piece.find().populate('types.vehicule', 'marque modele annee type_moteur');
         res.status(200).json(pieces);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
     }
 };
+
+
 
 const deletePiece = async (req, res) => {
     try {
