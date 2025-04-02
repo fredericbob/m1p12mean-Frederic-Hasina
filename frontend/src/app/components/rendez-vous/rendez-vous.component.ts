@@ -20,7 +20,8 @@ export class RendezVousComponent {
        modele: '',
       annee: null,
       marque: '',
-      type: ''
+      type: '',
+      type_moteur:''
     },
     date_rdv: '',
     prestations: [] as { prestation_id: string }[]
