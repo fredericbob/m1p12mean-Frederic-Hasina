@@ -31,7 +31,7 @@ export class InscriptionComponent implements OnInit {
   onInscription(): void {
     this.utilisateurservice.addutilisateur(this.user).subscribe(
       (response) => {
-
+console.log(response);
         setTimeout(() => {
           this.router.navigate(['login']);
         }, 1000);

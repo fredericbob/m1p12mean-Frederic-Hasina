@@ -21,7 +21,7 @@ export class ListeUtilisateurComponent {
   isRoleModalOpen: boolean = false;
 
   page: number = 1; // Page actuelle
-  itemsPerPage: number = 10; // Nombre d'éléments par page
+  itemsPerPage: number = 5; // Nombre d'éléments par page
 
   constructor(private utilisateurService: UtilisateurService) {}
 

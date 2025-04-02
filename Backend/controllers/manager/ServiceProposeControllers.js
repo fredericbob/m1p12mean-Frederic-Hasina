@@ -1,6 +1,6 @@
 const Prestation = require("../../models/Prestation")
 
-// Créer une prestation
+
 exports.createPrestation = async (req, res) => {
     try {
         const prestation = new Prestation(req.body);
@@ -11,10 +11,10 @@ exports.createPrestation = async (req, res) => {
     }
 };
 
-// Récupérer toutes les prestations
+
 exports.getPrestations = async (req, res) => {
     try {
-        // const prestations = await Prestation.find().populate('tarifs.vehicule_id');
+
         const prestations = await Prestation.find();
         res.status(200).json(prestations);
     } catch (error) {

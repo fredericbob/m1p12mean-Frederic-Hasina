@@ -4,18 +4,14 @@ const RendezVous = require('../../models/RendezVous');
 const addRendezVous = async (req, res) => {
     try {
         const { client_id, mecanicien_id, vehicule_id, date_rdv, prestations } = req.body;
-
         if (!client_id || !vehicule_id || !date_rdv || !prestations) {
             return res.status(400).json({ message: "Tous les champs sont requis." });
         }
-
-   
         for (const prestation of prestations) {
             if (!prestation.prestation_id) {
                 return res.status(400).json({ message: "Chaque prestation doit avoir un prestation_id." });
             }
         }
-
         const newRendezVous = new RendezVous({
             client_id,
             mecanicien_id,
@@ -49,14 +45,10 @@ const ajouterMecanicienARendezVous = async (req, res) => {
             console.log("Erreur : aucun ID de rendez-vous reçu.");
             return res.status(400).json({ error: "L'ID du rendez-vous est requis." });
         }
-
-        // Vérifie si l'ID du mécanicien est bien transmis
         if (!mecanicienId) {
             console.log("Erreur : aucun ID de mécanicien reçu.");
             return res.status(400).json({ error: "L'ID du mécanicien est requis." });
         }
-
-        // Vérifie si le rendez-vous existe dans la base de données
         const rendezVous = await RendezVous.findByIdAndUpdate(id, {  mecanicien_id:mecanicienId }, { new: true });
 
         if (!rendezVous) {
