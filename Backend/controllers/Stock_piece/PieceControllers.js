@@ -27,6 +27,9 @@ const addPiece = async (req, res) => {
     }
 };
 
+
+
+
 const getPieces = async (req, res) => {
     try {
         const pieces = await Piece.find();

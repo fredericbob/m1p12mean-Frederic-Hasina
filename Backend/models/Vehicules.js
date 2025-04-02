@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 
 
 const vehicules = new mongoose.Schema({
-    proprietaire_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Utilisateur', 
-        required: true
-    },
     marque: {
         type: String,
         required: [true, "La marque du véhicule est requise"]
@@ -19,14 +14,10 @@ const vehicules = new mongoose.Schema({
         type: Number,
         required: [true, "L'année du véhicule est requise"]
     },
-    immatriculation: {
+    type_moteur: {
         type: String,
-        required: [true, "L'immatriculation du véhicule est requise"],
-        unique: true
-    },
-    kilometrage: {
-        type: Number,
-        required: [true, "Le kilométrage du véhicule est requis"]
+        enum: ['essence', 'diesel'],
+        required: [true, "Le type de moteur est requis"]
     },
     date_ajout: {
         type: Date,

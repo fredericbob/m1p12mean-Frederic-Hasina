@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class ManagerComponent {
   user: any = { name: '', role: '' };
   isDropdownOpen = false;
+  isMenuVisible = false; 
 
   constructor(private utilisateurService: UtilisateurService,private router: Router) {}
 
@@ -29,6 +30,9 @@ export class ManagerComponent {
   toggleDropdown(): void {
     console.log('Toggle dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible; // Si visible, on cache; sinon on affiche
   }
 
   logout(): void {

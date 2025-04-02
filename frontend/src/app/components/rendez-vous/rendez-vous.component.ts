@@ -28,9 +28,12 @@ export class RendezVousComponent {
 
   prestationsList: any[] = [];
 
+  messageSuccess = '';
+  messageError = '';
+
   constructor(private rendezVousService: RendezvousService,private utilisateurservice:UtilisateurService,private prestationService:ListprestationService) {}
   ngOnInit() {
-    const clientId  = this.utilisateurservice.getUserIdFromToken(); // Récupérer l'ID du client
+    const clientId  = this.utilisateurservice.getUserIdFromToken();
     if (clientId) {
       this.rendezVous.client_id = clientId?.id;
     } else {
@@ -66,10 +69,14 @@ export class RendezVousComponent {
   onSubmit() {
     this.rendezVousService.addRendezVous(this.rendezVous).subscribe(
       response => {
+        this.messageSuccess = 'Rendez-vous ajouté avec succès ✅';
+        this.messageError = '';
         console.log('Rendez-vous créé', response);
       },
       error => {
         console.error('Erreur lors de la création du rendez-vous', error);
+        this.messageError = 'Erreur lors de l\'ajout du rendez-vous ❌';
+        this.messageSuccess = '';
       }
     );
   }
