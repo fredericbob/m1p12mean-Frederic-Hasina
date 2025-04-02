@@ -7,10 +7,11 @@ const {getMecaniciens} = require('../controllers/UtilisateurConttrollers');
 
 router.post('/', addRendezVous);
 router.get('/', jwtAuth('manager'),getRendezVous);
-router.get('/:clientId', jwtAuth('client'),getRendezVousByClientId);
+
 router.get('/mecanicien', jwtAuth('manager'),getMecaniciens);
 router.get('/mecanicienrendezvous',jwtAuth('manager'),getMecanicienForRendezVous);
 router.put('/:id/ajoutmecanicien', jwtAuth('manager'),ajouterMecanicienARendezVous);
+router.get('/:clientId', jwtAuth('client'),getRendezVousByClientId);
 router.delete('/:id', deleteRendezVous);
 router.put('/:id', updateRendezVous);
 router.put('/:id/status', updateStatutRdv);
