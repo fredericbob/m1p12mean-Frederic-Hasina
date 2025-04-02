@@ -86,20 +86,27 @@ isMecanicienModalOpen = false;
     }
   }
 
-
   filterRendezVous(): void {
     if (this.searchTerm) {
+      const searchLower = this.searchTerm.toLowerCase();
+
       this.filteredRendezVous = this.rendezVousList.filter(rdv =>
-        rdv.client_id?.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+        (rdv.client_id?.nom?.toLowerCase().includes(searchLower) ||
+         rdv.statut?.toLowerCase().includes(searchLower))
       );
-    }else{
+    } else {
       this.filteredRendezVous = [...this.rendezVousList];
     }
+
+    console.log("Résultats filtrés :", this.filteredRendezVous);
   }
 
+
   onSearchTermChange(): void {
+    console.log("Recherche : ", this.searchTerm);
     this.filterRendezVous();
   }
+
 
   openModal(vehicule: any) {
     console.log("Véhicule sélectionné :", vehicule);
