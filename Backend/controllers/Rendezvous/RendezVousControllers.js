@@ -104,6 +104,30 @@ const getRendezVous = async (req, res) => {
     }
 };
 
+const getRendezVousByClientId = async (req, res) => {
+    try {
+        const { clientId } = req.params;
+
+        if (!clientId) {
+            return res.status(400).json({ message: "L'ID du client est requis." });
+        }
+
+        const rendezVous = await RendezVous.find({ client_id: clientId })
+            .populate('client_id', 'nom prenom email')
+            .populate('vehicule_id', 'marque modele annee immatriculation kilometrage')
+            .populate('mecanicien_id', 'nom prenom')
+            .populate('prestations.prestation_id', 'nom');
+
+        if (!rendezVous || rendezVous.length === 0) {
+            return res.status(404).json({ message: "Aucun rendez-vous trouvé pour ce client." });
+        }
+
+        res.status(200).json(rendezVous);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur serveur", error: error.message });
+    }
+};
+
 const updateDateRdv = async (req, res) => {
     try {
         const { id } = req.params;
@@ -172,5 +196,6 @@ module.exports = {
     getMecanicienForRendezVous,
     ajouterMecanicienARendezVous,
     updateStatutRdv,
-    updateDateRdv
+    updateDateRdv,
+    getRendezVousByClientId
 };
