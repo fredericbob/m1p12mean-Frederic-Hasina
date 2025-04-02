@@ -1,21 +1,34 @@
 const Prestation = require("../../models/Prestation")
+const Piece = require("../../models/Piece")
 
 // Récupérer toutes les prestations avec le prix minimum
 exports.getAccueilPrestations = async (req, res) => {
     try {
-        const prestations = await Prestation.find().populate("tarifs.vehicule_id");
+        const prestations = await Prestation.find().populate("processus.pieces_possibles");
 
         const formattedPrestations = prestations.map((prestation) => {
-            // Trouver le prix minimum parmi tous les types de véhicules pour cette prestation
-            const prixMin = prestation.tarifs.length > 0
-                ? Math.min(...prestation.tarifs.map(tarif => tarif.prix_minimum))
-                : 0; // Si pas de tarifs, prix à 0
+            let prixMinPieces = 0;
+
+            // Calculer le prix minimum des pièces requises par chaque processus
+            prestation.processus.forEach((processus) => {
+                if (processus.pieces_possibles.length > 0) {
+                    const prixMinProcessus = Math.min(
+                        ...processus.pieces_possibles.flatMap(piece =>
+                            piece.variantes.map(variant => variant.prix)
+                        )
+                    );
+                    prixMinPieces += prixMinProcessus;
+                }
+            });
+
+            // Prix total minimum = main d'œuvre + somme des prix min de chaque processus
+            const prixMinTotal = prestation.prix_main_oeuvre + prixMinPieces;
 
             return {
                 id: prestation._id,
                 nom: prestation.nom,
                 description: prestation.description,
-                prix_minimum: prixMin
+                prix_minimum: prixMinTotal
             };
         });
 

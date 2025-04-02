@@ -1,7 +1,16 @@
 const mongoose = require('mongoose');
 
-
-const vehicules = new mongoose.Schema({
+const vehiculeSchema = new mongoose.Schema({
+    proprietaire_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Utilisateur',
+        required: true
+    },
+    type: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'TypeVehicule',
+        required: true
+    },
     marque: {
         type: String,
         required: [true, "La marque du véhicule est requise"]
@@ -25,7 +34,6 @@ const vehicules = new mongoose.Schema({
     }
 });
 
-
-module.exports = mongoose.model('Vehicules', vehicules);
+module.exports = mongoose.model('Vehicules', vehiculeSchema);
 
 
