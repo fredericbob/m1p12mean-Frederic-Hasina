@@ -15,7 +15,8 @@ import { FormsModule } from '@angular/forms';
 export class ManagerComponent {
   user: any = { name: '', role: '' };
   isDropdownOpen = false;
-  isMenuVisible = false; 
+  isMenuVisible = false;
+  isStockMenuVisible: boolean = false;
 
   constructor(private utilisateurService: UtilisateurService,private router: Router) {}
 
@@ -31,9 +32,16 @@ export class ManagerComponent {
     console.log('Toggle dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-  toggleMenu() {
-    this.isMenuVisible = !this.isMenuVisible; // Si visible, on cache; sinon on affiche
+  toggleMenu(menu: string) {
+    if (menu === 'stock') {
+      this.isStockMenuVisible = !this.isStockMenuVisible;
+      if (this.isStockMenuVisible) this.isMenuVisible = false; // Ferme l'autre menu
+    } else if (menu === 'vehicules') {
+      this.isMenuVisible = !this.isMenuVisible;
+      if (this.isMenuVisible) this.isStockMenuVisible = false; // Ferme l'autre menu
+    }
   }
+  
 
   logout(): void {
     localStorage.removeItem('token'); // Supprimer le token

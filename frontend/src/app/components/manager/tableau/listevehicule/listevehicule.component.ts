@@ -16,7 +16,7 @@ export class ListevehiculeComponent {
   filteredVehicules: any[] = [];
   searchTerm: string = '';
   page: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 7;
 
   constructor(private vehiculeService: VehiculeService) {}
 
@@ -37,7 +37,7 @@ export class ListevehiculeComponent {
   onSearchTermChange() {
     this.filteredVehicules = this.vehicules.filter(v =>
       v.marque.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      v.modele.toLowerCase().includes(this.searchTerm.toLowerCase())
+      v.modele.toLowerCase().includes(this.searchTerm.toLowerCase()) 
     );
   }
 
