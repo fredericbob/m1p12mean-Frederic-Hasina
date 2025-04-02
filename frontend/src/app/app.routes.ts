@@ -9,6 +9,9 @@ import { ListeRendezvousComponent } from './components/manager/tableau/liste-ren
 import { ConfirmationemailComponent } from './components/email/confirmationemail/confirmationemail.component';
 import { ResetPasswordComponent } from './components/email/reset-password/reset-password.component';
 import { ListeUtilisateurComponent } from './components/manager/tableau/liste-utilisateur/liste-utilisateur.component';
+import { PieceComponent } from './components/stock/piece/piece.component';
+import { VehiculeComponent } from './components/vehicule/vehicule/vehicule.component';
+import { ListevehiculeComponent } from './components/manager/tableau/listevehicule/listevehicule.component';
 
 export const routes: Routes = [ { path: 'login', component: LoginComponent },
   { path: 'rendezvous', component:RendezVousComponent  },
@@ -17,7 +20,11 @@ export const routes: Routes = [ { path: 'login', component: LoginComponent },
     component: ManagerComponent,
     children: [
       { path: 'listeUtilisateur', component:ListeUtilisateurComponent  },
-      { path: 'listerendezvous', component:ListeRendezvousComponent  }
+      { path: 'listerendezvous', component:ListeRendezvousComponent  },
+      { path: 'stockpiece', component:PieceComponent  },
+      { path: 'ajoutvehicule', component:VehiculeComponent  },
+      { path: 'listevehicule', component:ListevehiculeComponent  },
+
     ]
 },
 

@@ -3,24 +3,21 @@ const Vehicle = require('../models/Vehicules');
 
 const addVehicule = async (req, res) => {
     try {
-        const { marque, modele, annee, immatriculation, kilometrage } = req.body;
-        const userId = req.user.id; 
+        const { marque, modele, annee, type_moteur } = req.body; 
         const newVehicle = new Vehicle({
-            proprietaire_id: userId,  
             marque,
             modele,
             annee,
-            immatriculation,
-            kilometrage
+            type_moteur 
         });
         const savedVehicle = await newVehicle.save();
 
         res.status(201).json({
-            message: 'Vehicule ajouté avec succès',
+            message: 'Véhicule ajouté avec succès',
             vehicle: savedVehicle
         });
     } catch (err) {
-        res.status(500).json({ message: 'Erreur lors de l ajout du véhicule', error: err });
+        res.status(500).json({ message: 'Erreur lors de l\'ajout du véhicule', error: err });
     }
 };
 

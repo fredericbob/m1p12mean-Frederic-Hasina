@@ -24,6 +24,39 @@
           <span class="text-sm">Liste Utilisateurs</span>
         </a>
       </li>
+      <li class="mb-1 group">
+        <a routerLink="/stockpiece" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-home-2-line mr-3 text-lg"></i>
+          <span class="text-sm">Liste piece</span>
+        </a>
+      </li>
+      <li class="mb-1 group">
+        <a routerLink="/ajoutpiece" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-home-2-line mr-3 text-lg"></i>
+          <span class="text-sm">Ajout piece</span>
+        </a>
+      </li>
+      <li class="mb-1 group relative">
+        <button (click)="toggleMenu()" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-home-2-line mr-3 text-lg"></i>
+          <span class="text-sm">Véhicules</span>
+        </button>
+
+        <!-- Sous-menu qui apparaît quand on clique sur le bouton -->
+        <ul *ngIf="isMenuVisible" class="absolute left-0 mt-2 space-y-2 w-full bg-[#f8f4f3] text-gray-900 rounded-md">
+          <li class="mb-1 group">
+            <a routerLink="/listevehicule" class="flex font-semibold items-center py-2 px-10 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <span class="text-sm">Liste des véhicules</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/ajoutvehicule" class="flex font-semibold items-center py-2 px-10 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <span class="text-sm">Ajout véhicule</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
     </ul>
   </div>
 
