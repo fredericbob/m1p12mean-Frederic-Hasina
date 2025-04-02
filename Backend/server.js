@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Mongo Connected"))
     .catch((err) => console.log("MongoDB connection error:", err));
 
-app.use('/send-email', require('./routes/Email/emailRoute')); 
+app.use('/send-email', require('./routes/Email/emailRoute'));
 app.use('/users',require('./routes/UtilisateurRoutes'));
 app.use('/login',require('./routes/LoginRoutes'));
 app.use('/vehicules',require('./routes/VehiculeRoutes'));
@@ -25,13 +25,19 @@ app.use('/forgot-password',require('./routes/Email/emailRoute'));
 app.use('/reset-password',require('./routes/Email/emailRoute'));
 app.use('/facture',require('./routes/facture/factureRoute'));
 
+// ---------- Routes layout -----------
+app.use('/default-layout', require('./routes/layout-frontend/DefaultLayoutRoutes'));
+
 // ---------- Routes profil client -----------
 app.use('/acceuil', require('./routes/client/AcceuilRoutes'));
 app.use('/rendez-vous', require('./routes/client/SuivisReparationRoutes'));
 app.use('/rendez-vous', require('./routes/client/AvisRoutes'));
+app.use('/prestation', require('./routes/client/DetailPrestationRoutes'));
 
 // ---------- Routes profil mecanicien -----------
 app.use('/mecanicien/rendez-vous', require('./routes/mecanicien/ListeRendezVousRoutes'));
+app.use('/mecanicien/rendez-vous', require('./routes/mecanicien/SuiviReparationRoutes'));
+
 
 // ---------- Routes profil manager -----------
 app.use('/services-proposes', require('./routes/manager/ServiceProposeRoutes'));
