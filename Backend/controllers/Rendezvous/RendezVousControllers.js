@@ -1,4 +1,6 @@
 const RendezVous = require('../../models/RendezVous');
+const Piece = require('../../models/Piece'); // Ajuste le chemin en fonction de l'emplacement de ton fichier
+
 
 
 const addRendezVous = async (req, res) => {
@@ -97,7 +99,10 @@ const updateStatutRdv = async (req, res) => {
 
 const getRendezVous = async (req, res) => {
     try {
-        const rendezVous = await RendezVous.find().populate('client_id', 'nom prenom email').populate('vehicule_id', 'marque modele annee immatriculation kilometrage ').populate('mecanicien_id', 'nom prenom').populate('prestations.prestation_id', 'nom').populate('prestations.prestation_id', 'nom');
+        const rendezVous = await RendezVous.find().populate('client_id', 'nom prenom email').populate('vehicule_id', 'marque modele annee immatriculation kilometrage ').populate('mecanicien_id', 'nom prenom').populate('prestations.prestation_id', 'nom').populate('prestations.prestation_id', 'nom').populate({
+            path: 'vehicule_id',
+            populate: { path: 'type', select: 'nom' }
+        });
         res.status(200).json(rendezVous);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
@@ -187,23 +192,21 @@ const updateRendezVous = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
     }
 }
-
 const genererfacture = async (req, res) => {
     try {
-        const { rendezVousId } = req.body; // Recevoir l'ID du rendez-vous
+        const { rendezVousId } = req.body; 
         const rendezVous = await RendezVous.findById(rendezVousId)
             .populate('prestations.prestation_id')
-            .populate('vehicule_id.type')  // Populer le champ "type" avec les informations de TypeVehicule
+            .populate('vehicule_id.type')
             .exec();
 
         if (!rendezVous) {
             return res.status(404).json({ message: 'Rendez-vous non trouvé.' });
         }
 
-        // Initialiser le montant de la facture avec la main-d'œuvre
+       
         let totalFacture = 0;
-        
-        // Calculer la main-d'œuvre à partir des prestations du rendez-vous
+
         for (let prestation of rendezVous.prestations) {
             const prestationDetails = prestation.prestation_id;
             if (prestationDetails) {
@@ -211,11 +214,11 @@ const genererfacture = async (req, res) => {
             }
         }
 
-        // Récupérer les informations du type de véhicule
+     
         const vehicule = rendezVous.vehicule_id;
-        const typeVehicule = vehicule.type; // C'est maintenant un objet `TypeVehicule`
+        const typeVehicule = vehicule.type; 
 
-        // Vérifier les pièces disponibles pour ce type de véhicule
+
         let piecesFacture = [];
         if (vehicule) {
             for (let prestation of rendezVous.prestations) {
@@ -223,15 +226,23 @@ const genererfacture = async (req, res) => {
                 if (prestationDetails && prestationDetails.processus) {
                     for (let processus of prestationDetails.processus) {
                         for (let piece of processus.pieces_possibles) {
-                            // Vérifier si la pièce est compatible avec le type de véhicule
+                           
+                            console.log('Vérification de la pièce:', piece);
                             const pieceDisponible = await Piece.findById(piece._id);
+                            if (!pieceDisponible) {
+                                console.log('Pièce non trouvée:', piece._id);
+                                continue; 
+                            }
+
                             const pieceVariante = pieceDisponible.variantes.find(variante => String(variante.type_vehicule) === String(typeVehicule._id));
                             if (pieceVariante) {
                                 piecesFacture.push({
                                     nom: pieceDisponible.nom,
                                     prix: pieceVariante.prix
                                 });
-                                totalFacture += pieceVariante.prix; // Ajouter le prix de la pièce à la facture
+                                totalFacture += pieceVariante.prix; 
+                            } else {
+                                console.log('Aucune variante trouvée pour la pièce:', pieceDisponible.nom);
                             }
                         }
                     }

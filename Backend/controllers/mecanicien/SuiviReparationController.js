@@ -4,8 +4,6 @@ const Prestation = require("../../models/Prestation");
 exports.getDetailsRendezVous = async (req, res) => {
     try {
         const { id } = req.params;
-
-        // Vérifier si le rendez-vous existe et récupérer les prestations
         const rendezVous = await RendezVous.findById(id)
             .populate("client_id", "nom")
             .populate("vehicule_id", "nom")
@@ -16,18 +14,17 @@ exports.getDetailsRendezVous = async (req, res) => {
             return res.status(404).json({ message: "Rendez-vous non trouvé" });
         }
 
-        // Construire la liste des prestations avec leur statut le plus récent
         const prestations = rendezVous.prestations.map(p => {
             const statuts = p.statuts;
             const dernierStatut = Object.keys(statuts)
-                .filter(key => statuts[key]) // Prendre uniquement les statuts définis
-                .sort((a, b) => new Date(statuts[b]) - new Date(statuts[a]))[0]; // Trier et prendre le plus récent
+                .filter(key => statuts[key]) 
+                .sort((a, b) => new Date(statuts[b]) - new Date(statuts[a]))[0]; 
 
             return {
                 id: p.prestation_id._id,
                 nom: p.prestation_id.nom,
                 description: p.prestation_id.description,
-                statut: dernierStatut || "En attente" // Par défaut, "En attente" si aucun statut trouvé
+                statut: dernierStatut || "En attente" 
             };
         });
 
@@ -66,26 +63,21 @@ exports.getDetailsRendezVous = async (req, res) => {
 exports.updateStatutPrestation = async (req, res) => {
     try {
         const { rendezvousId, prestationId, statut } = req.body;
-
-        // Vérifier si le rendez-vous existe
         const rendezVous = await RendezVous.findById(rendezvousId);
         if (!rendezVous) {
             return res.status(404).json({ message: "Rendez-vous non trouvé" });
         }
 
-        // Trouver la prestation dans le rendez-vous
         const prestation = rendezVous.prestations.find(p => p.prestation_id.toString() === prestationId);
         if (!prestation) {
             return res.status(404).json({ message: "Prestation non trouvée dans ce rendez-vous" });
         }
 
-        // Mettre à jour le statut de la prestation
         prestation.statuts[statut] = new Date();
 
-        // Sauvegarder les modifications
+ 
         await rendezVous.save();
 
-        // Vérifier si toutes les prestations sont "Terminé" ou "Annulé"
         const allPrestationsDone = rendezVous.prestations.every(p =>
             p.statuts.Terminé || p.statuts.Annulé
         );

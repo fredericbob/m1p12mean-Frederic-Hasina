@@ -19,7 +19,6 @@ exports.getPrestationById = async (req, res) => {
 
         let prixVehiculeMap = {};
 
-        // Calcul des prix des pièces pour chaque véhicule
         prestation.processus.forEach(processus => {
             processus.pieces_possibles.forEach(piece => {
                 piece.variantes.forEach(variant => {
@@ -40,7 +39,6 @@ exports.getPrestationById = async (req, res) => {
             });
         });
 
-        // Vérification des processus manquants
         Object.values(prixVehiculeMap).forEach(vehiculeData => {
             prestation.processus.forEach(processus => {
                 if (!vehiculeData.prixPieces[processus.nom_etape]) {

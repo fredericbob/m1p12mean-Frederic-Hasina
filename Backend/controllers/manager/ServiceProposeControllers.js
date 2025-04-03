@@ -1,7 +1,7 @@
 const Piece = require("../../models/Piece");
 const Prestation = require("../../models/Prestation")
 
-// Créer une prestation
+
 exports.createPrestation = async (req, res) => {
     try {
         const prestation = new Prestation(req.body);
@@ -12,7 +12,7 @@ exports.createPrestation = async (req, res) => {
     }
 };
 
-// Récupérer toutes les prestations
+
 exports.getAllPrestations = async (req, res) => {
     try {
         const prestations = await Prestation.find();
@@ -22,7 +22,7 @@ exports.getAllPrestations = async (req, res) => {
     }
 };
 
-// Récupérer une prestation par ID
+
 exports.getPrestationById = async (req, res) => {
     try {
         const prestation = await Prestation.findById(req.params.id);
@@ -54,7 +54,6 @@ exports.deletePrestation = async (req, res) => {
     }
 };
 
-// Récupérer toutes les pièces disponibles
 exports.getAllPieces = async (req, res) => {
     try {
         const pieces = await Piece.find().populate('variantes.type_vehicule');

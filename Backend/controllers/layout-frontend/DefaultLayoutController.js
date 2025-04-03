@@ -1,6 +1,6 @@
 const Prestation = require("../../models/Prestation");
 
-// Recupere uniquement les noms  des prestations
+
 exports.getPrestations = async (req, res) => {
     try {
         const prestations = await Prestation.find({}, "nom _id");
@@ -12,7 +12,7 @@ exports.getPrestations = async (req, res) => {
 };
 
 
-// Récupérer les détails d'une prestation par ID
+
 exports.getPrestationById = async (req, res) => {
     try {
         const prestation = await Prestation.findById(req.params.id);

@@ -7,7 +7,7 @@ const login= async(req,res)=>{
     try{
         const {email,mdp}=req.body;
         const user= await  client.findOne({email});
-
+      
         if(!user){
           return  res.status(400).json({ message: "Identifiants incorrects"});
         }

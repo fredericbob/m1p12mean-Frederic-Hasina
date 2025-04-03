@@ -1,15 +1,12 @@
 const Prestation = require("../../models/Prestation")
 const Piece = require("../../models/Piece")
 
-// Récupérer toutes les prestations avec le prix minimum
+
 exports.getAccueilPrestations = async (req, res) => {
     try {
         const prestations = await Prestation.find().populate("processus.pieces_possibles");
-
         const formattedPrestations = prestations.map((prestation) => {
             let prixMinPieces = 0;
-
-            // Calculer le prix minimum des pièces requises par chaque processus
             prestation.processus.forEach((processus) => {
                 if (processus.pieces_possibles.length > 0) {
                     const prixMinProcessus = Math.min(
@@ -21,7 +18,6 @@ exports.getAccueilPrestations = async (req, res) => {
                 }
             });
 
-            // Prix total minimum = main d'œuvre + somme des prix min de chaque processus
             const prixMinTotal = prestation.prix_main_oeuvre + prixMinPieces;
 
             return {
