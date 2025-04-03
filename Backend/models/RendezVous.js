@@ -15,7 +15,7 @@
             modele: { type: String, required: true },
             annee: { type: Number, required: true },
             marque: { type: String, required: true },
-            type: { type: String, required: true },
+            type: { type: mongoose.Schema.Types.ObjectId, ref: 'TypeVehicule', required: true },
             type_moteur: {
                 type: String,
                 enum: ['essence', 'diesel'],
