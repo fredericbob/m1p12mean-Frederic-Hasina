@@ -1,12 +1,9 @@
 const RendezVous = require('../../models/RendezVous');
 
-// Recupere la liste des rendez-vous d'un mecanicien authentifié
+
 exports.getRendezVousMecanicien = async (req, res) => {
     try {
-        // Recupere l'ID du mécanicien à partir du middleware jwtAuth
         const mecanicienId = req.user.id;
-
-        // Recupere les rendez-vous du mécanicien qui ne sont pas terminés
         const rendezVous = await RendezVous.find({
             mecanicien_id: mecanicienId,
             statut: { $ne: "Terminé" }
@@ -14,8 +11,6 @@ exports.getRendezVousMecanicien = async (req, res) => {
         .populate("client_id", "nom")
         .populate("vehicule_id", "nom")
         .select("date_rdv client_id vehicule_id");
-
-        // Formater les données
         const result = rendezVous.map(rdv => ({
             id: rdv._id,
             client: rdv.client_id.nom,

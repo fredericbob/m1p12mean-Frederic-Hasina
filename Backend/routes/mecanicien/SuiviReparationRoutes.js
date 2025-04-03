@@ -3,10 +3,9 @@ const router = express.Router();
 const jwtAuth = require('../../middlewares/jwtAuth');
 const { getDetailsRendezVous, updateStatutPrestation } = require("../../controllers/mecanicien/SuiviReparationController");
 
-// Route pour récupérer les détails d’un rendez-vous
-router.get("/:id", getDetailsRendezVous);
+router.get("/:id",jwtAuth('mecanicien'), getDetailsRendezVous);
 
-// Route pour mettre à jour le statut d’une prestation
-router.put("/prestation/:id", updateStatutPrestation);
+
+router.put("/prestation/:id",jwtAuth('mecanicien'), updateStatutPrestation);
 
 module.exports = router;

@@ -11,9 +11,9 @@ const jwtAuth=require('../../middlewares/jwtAuth');
 
 router.post('/', ServiceProposeController.createPrestation);
 router.get('/', ServiceProposeController.getAllPrestations);
-router.get('/:id', ServiceProposeController.getPrestationById);
-router.put('/:id', ServiceProposeController.updatePrestation);
-router.delete('/:id', ServiceProposeController.deletePrestation);
-router.get('/pieces', ServiceProposeController.getAllPieces);
+router.get('/:id',jwtAuth('manager'), ServiceProposeController.getPrestationById);
+router.put('/:id',jwtAuth('manager'), ServiceProposeController.updatePrestation);
+router.delete('/:id',jwtAuth('manager'), ServiceProposeController.deletePrestation);
+router.get('/pieces',jwtAuth('manager'), ServiceProposeController.getAllPieces);
 
 module.exports = router;

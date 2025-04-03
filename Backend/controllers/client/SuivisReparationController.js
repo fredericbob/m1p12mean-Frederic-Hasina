@@ -1,6 +1,6 @@
 const RendezVous = require('../../models/RendezVous');
 
-// Recupere le statut de chaque prestations pour un rendez-vous donné
+
 exports.getSuiviReparations = async (req, res) => {
     try {
         const rendezVous = await RendezVous.findById(req.params.id).populate('prestations.prestation_id');
@@ -10,7 +10,6 @@ exports.getSuiviReparations = async (req, res) => {
         }
 
         const prestationsSuivi = rendezVous.prestations.map(prestation => {
-            // Recuperer le statut ayant le timestamp le plus recent
             const statuts = prestation.statuts;
             let statutActuel = "En attente";
             let dernierTimestamp = statuts.En_attente;

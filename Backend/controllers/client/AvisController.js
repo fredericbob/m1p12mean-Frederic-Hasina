@@ -1,6 +1,6 @@
 const RendezVous = require('../../models/RendezVous');
 
-// Ajouter un avis à un rendez-vous
+
 exports.ajouterAvis = async (req, res) => {
     try {
         const { note, commentaire } = req.body;
@@ -19,7 +19,6 @@ exports.ajouterAvis = async (req, res) => {
     }
 };
 
-// Modifier un avis sur un rendez-vous
 exports.modifierAvis = async (req, res) => {
     try {
         const { note, commentaire } = req.body;
@@ -44,7 +43,6 @@ exports.modifierAvis = async (req, res) => {
     }
 };
 
-// Supprimer un avis sur un rendez-vous
 exports.supprimerAvis = async (req, res) => {
     try {
         const rendezVous = await RendezVous.findById(req.params.id);
