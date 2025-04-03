@@ -33,6 +33,7 @@ app.use('/acceuil', require('./routes/client/AcceuilRoutes'));
 app.use('/rendez-vous', require('./routes/client/SuivisReparationRoutes'));
 app.use('/rendez-vous', require('./routes/client/AvisRoutes'));
 app.use('/prestation', require('./routes/client/DetailPrestationRoutes'));
+app.use('/devis', require('./routes/client/devisRoutes'));
 
 // ---------- Routes profil mecanicien -----------
 app.use('/mecanicien/rendez-vous', require('./routes/mecanicien/ListeRendezVousRoutes'));
