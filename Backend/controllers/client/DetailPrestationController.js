@@ -9,7 +9,7 @@ exports.getPrestationById = async (req, res) => {
                 path: "processus.pieces_possibles",
                 populate: {
                     path: "variantes.type_vehicule",
-                    model: "TypeVehicule" // 🔥 Assure que le modèle est bien chargé
+                    model: "TypeVehicule"
                 }
             });
 
@@ -22,7 +22,7 @@ exports.getPrestationById = async (req, res) => {
         prestation.processus.forEach(processus => {
             processus.pieces_possibles.forEach(piece => {
                 piece.variantes.forEach(variant => {
-                    if (variant.type_vehicule && variant.type_vehicule.nom) { // 🔥 Vérification ajoutée
+                    if (variant.type_vehicule && variant.type_vehicule.nom) {
                         const vehiculeId = variant.type_vehicule._id.toString();
                         if (!prixVehiculeMap[vehiculeId]) {
                             prixVehiculeMap[vehiculeId] = {
