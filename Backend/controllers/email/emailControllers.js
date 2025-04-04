@@ -2,7 +2,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const sendResetPasswordEmail = require('../../models/email');
-const User = require('../../models/Utilisateur'); // ton modèle d'utilisateur
+const User = require('../../models/Utilisateur'); 
 
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
