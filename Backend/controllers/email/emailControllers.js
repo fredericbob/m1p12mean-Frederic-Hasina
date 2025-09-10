@@ -13,7 +13,7 @@ exports.forgotPassword = async (req, res) => {
             return res.status(404).send("Utilisateur non trouvé.");
         }
 
- 
+        
         const token = jwt.sign(
             { id: user._id, email: user.email },
             process.env.JWT_KEY, 
@@ -48,7 +48,7 @@ exports.resetPassword = async (req, res) => {
 
         res.status(200).json({message:"Mot de passe réinitialisé."});
     } catch (error) {
-        console.error("Erreur dans la fonction resetPassword:", error); // Ajoute un log d'erreur
+        console.error("Erreur dans la fonction resetPassword:", error);
         return res.status(400).send("Token invalide ou expiré. Détail de l'erreur: " + error.message);
     }
 };
