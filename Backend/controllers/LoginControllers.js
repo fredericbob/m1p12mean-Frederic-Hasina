@@ -1,4 +1,3 @@
-
 const client=require('../models/Utilisateur');
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
@@ -7,6 +6,7 @@ const login= async(req,res)=>{
     try{
         const {email,mdp}=req.body;
         const user= await  client.findOne({email});
+        console.log(user);
       
         if(!user){
           return  res.status(400).json({ message: "Identifiants incorrects"});
