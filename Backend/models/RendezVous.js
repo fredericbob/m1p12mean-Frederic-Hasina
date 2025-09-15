@@ -11,10 +11,10 @@
                 ref: 'Utilisateur',
                 required: false
             },
-            vehicule_enregistrer: {  
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Vehicule', 
-                required: false 
+            vehicule_enregistrer: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Vehicule',
+                required: false
             },
             vehicule_id: {
                 modele: { type: String },
@@ -60,6 +60,10 @@
                 commentaire: {
                     type: String,
                     trim: true,
+                    required: false
+                },
+                date_avis: {
+                    type: Date,
                     required: false
                 }
             }

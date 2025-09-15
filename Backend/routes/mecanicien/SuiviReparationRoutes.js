@@ -6,7 +6,7 @@ const jwtAuth = require('../../middlewares/jwtAuth');
 // Routes CRUD pour les prestations
 router.post('/', jwtAuth('manager'), ServiceProposeController.createPrestation);
 router.get('/', jwtAuth('manager'), ServiceProposeController.getAllPrestations);
-router.get('/pieces', jwtAuth('manager'), ServiceProposeController.getAllPieces); // AVANT les routes avec :id
+router.get('/pieces', jwtAuth('manager'), ServiceProposeController.getAllPieces);
 router.get('/types-vehicule', jwtAuth('manager'), ServiceProposeController.getAllTypesVehicule);
 router.get('/:id', jwtAuth('manager'), ServiceProposeController.getPrestationById);
 router.put('/:id', jwtAuth('manager'), ServiceProposeController.updatePrestation);
