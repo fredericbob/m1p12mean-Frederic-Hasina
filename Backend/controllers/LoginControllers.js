@@ -24,7 +24,7 @@ const login= async(req,res)=>{
         },
          
          process.env.JWT_KEY,
-         {expiresIn:"1h"}
+         {expiresIn:"9h"}
         );
         res.status(200).json({ message: "Connexion réussie" ,token:token});
     }catch (err) {
