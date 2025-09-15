@@ -31,7 +31,6 @@ app.use('/default-layout', require('./routes/layout-frontend/DefaultLayoutRoutes
 // ---------- Routes profil client -----------
 app.use('/acceuil', require('./routes/client/AcceuilRoutes'));
 app.use('/rendez-vous', require('./routes/client/SuivisReparationRoutes'));
-app.use('/rendez-vous', require('./routes/client/AvisRoutes'));
 app.use('/prestation', require('./routes/client/DetailPrestationRoutes'));
 app.use('/devis', require('./routes/client/devisRoutes'));
 
